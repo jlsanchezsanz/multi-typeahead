@@ -17,12 +17,15 @@ Typeahead with multi selection
 
     <div class="multi-typeahead__container">
       <div class="multi-typeahead__input-wrapper">
+        <template is="dom-repeat" items="[[selectedItems]]">
+          <span>[[item.fullName]]</span>
+        </template>
         <input class="multi-typeahead__input" value="{{searchValue::input}}"></input>
       </div>
       <div class="multi-typeahead__list">
         <ul>
           <template is="dom-repeat" items="[[items]]" filter="{{_filter(searchValue)}}">
-            <li class="multi-typeahead__item">
+            <li class="multi-typeahead__item" on-tap="_selectItem">
               <img src="[[item.picture.thumbnail]]" alt="" class="multi-typeahead__image">
               [[item.fullName]]
             </li>
@@ -41,6 +44,13 @@ Typeahead with multi selection
       properties: {
         items: {
           type: Array
+        },
+
+        selectedItems: {
+          type: Array,
+          value: function() {
+            return [];
+          }
         }
       },
 
@@ -53,6 +63,10 @@ Typeahead with multi selection
             return item.fullName.toLowerCase().indexOf(searchValue) >= 0;
           }
         }
+      },
+
+      _selectItem: function(e) {
+        this.push('selectedItems', e.model.item);
       }
 
     });
