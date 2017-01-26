@@ -1,0 +1,34 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`multi-typeahead`
+Typeahead with multi selection
+
+@demo demo/index.html 
+-->
+
+<dom-module id="multi-typeahead">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]</h2>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'multi-typeahead',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'multi-typeahead',
+        },
+      },
+
+    });
+  </script>
+</dom-module>
