@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
 
 <!--
 `multi-typeahead`
@@ -18,7 +19,7 @@ Typeahead with multi selection
     <div class="multi-typeahead__container">
       <div class="multi-typeahead__input-wrapper">
         <template is="dom-repeat" items="[[selectedItems]]">
-          <span>[[item.fullName]]</span>
+          <span>[[item.fullName]] <iron-icon icon="icons:clear" on-tap="_removeItem"></iron-icon></span>
         </template>
         <input class="multi-typeahead__input" value="{{searchValue::input}}"></input>
       </div>
@@ -63,6 +64,13 @@ Typeahead with multi selection
             return item.fullName.toLowerCase().indexOf(searchValue) >= 0;
           }
         }
+      },
+
+      _removeItem: function(e) {
+        var index = this.selectedItems.findIndex(function(item) {
+          return item === e.model.item;
+        });
+        this.splice('selectedItems', index, 1);
       },
 
       _selectItem: function(e) {
