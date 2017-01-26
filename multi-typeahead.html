@@ -14,7 +14,23 @@ Typeahead with multi selection
         display: block;
       }
     </style>
-    <h2>Hello [[prop1]]</h2>
+
+    <div class="multi-typeahead__container">
+      <div class="multi-typeahead__input-wrapper">
+        <input class="multi-typeahead__input" value="{{searchValue::input}}"></input>
+      </div>
+      <div class="multi-typeahead__list">
+        <ul>
+          <template is="dom-repeat" items="[[items]]" filter="{{_filter(searchValue)}}">
+            <li class="multi-typeahead__item">
+              <img src="[[item.picture.thumbnail]]" alt="" class="multi-typeahead__image">
+              [[item.fullName]]
+            </li>
+          </template>
+        </ul>
+      </div>
+    </div>
+
   </template>
 
   <script>
@@ -23,11 +39,21 @@ Typeahead with multi selection
       is: 'multi-typeahead',
 
       properties: {
-        prop1: {
-          type: String,
-          value: 'multi-typeahead',
-        },
+        items: {
+          type: Array
+        }
       },
+
+      _filter: function(searchValue) {
+        if (!searchValue) {
+          return null;
+        } else {
+          searchValue = searchValue.toLowerCase();
+          return function(item) {
+            return item.fullName.toLowerCase().indexOf(searchValue) >= 0;
+          }
+        }
+      }
 
     });
   </script>
