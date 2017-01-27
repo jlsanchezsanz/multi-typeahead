@@ -19,7 +19,7 @@ Typeahead with multi selection
     <div class="multi-typeahead__container">
       <div class="multi-typeahead__input-wrapper">
         <template is="dom-repeat" items="[[selectedItems]]">
-          <span>[[item.fullName]] <iron-icon icon="icons:clear" on-tap="_removeItem"></iron-icon></span>
+          <span>[[item.name]] <iron-icon icon="icons:clear" on-tap="_removeItem"></iron-icon></span>
         </template>
         <input class="multi-typeahead__input" value="{{searchValue::input}}"></input>
       </div>
@@ -28,7 +28,7 @@ Typeahead with multi selection
           <template is="dom-repeat" items="[[items]]" filter="{{_filter(searchValue)}}">
             <li class="multi-typeahead__item" on-tap="_selectItem">
               <img src="[[item.picture.thumbnail]]" alt="" class="multi-typeahead__image">
-              [[item.fullName]]
+              [[item.name]]
             </li>
           </template>
         </ul>
@@ -61,7 +61,7 @@ Typeahead with multi selection
         } else {
           searchValue = searchValue.toLowerCase();
           return function(item) {
-            return item.fullName.toLowerCase().indexOf(searchValue) >= 0;
+            return item.name.toLowerCase().indexOf(searchValue) >= 0;
           }
         }
       },
