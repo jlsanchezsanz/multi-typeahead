@@ -14,21 +14,92 @@ Typeahead with multi selection
       :host {
         display: block;
       }
+
+      .multi-typeahead__input {
+        border: 1px solid #ccc;
+        display: flex;
+        padding: 5px 5px 0 5px;
+        flex-wrap: wrap;
+        cursor: text;
+      }
+
+      .multi-typeahead__label {
+        background-color: #ccc;
+        padding: 2px 2px 2px 4px;
+        margin: 0 5px 5px 0;
+        flex: none;
+      }
+
+      .multi-typeahead__label-icon {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+
+      .multi-typeahead__inner-input {
+        border: none;
+        width: 100%;
+        max-width: 100%;
+        flex: 1;
+        margin-bottom: 5px;
+        line-height: 19px;
+        font-size: 14px;
+      }
+
+      .multi-typeahead__inner-input:focus {
+        outline: none;
+      }
+
+      .multi-typeahead__list-wrapper {
+        margin-top: 14px;
+        overflow-y: scroll;
+        max-height: 310px;
+      }
+
+      .multi-typeahead__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .multi-typeahead__list-item:first-of-type {
+        border-top: 1px solid #ccc
+      }
+
+      .multi-typeahead__list-item {
+        padding: 5px;
+        border-bottom: 1px solid #ccc;
+        display: flex;
+        cursor: pointer;
+      }
+
+      .multi-typeahead__list-item:hover {
+        background-color: #f1f1f1;
+      }
+
+      .multi-typeahead__list-item__image {
+        height: 40px;
+      }
+
+      .multi-typeahead__list-item__text {
+        align-self: center;
+        margin-left: 5px;
+      }
     </style>
 
     <div class="multi-typeahead__container">
-      <div class="multi-typeahead__input-wrapper">
+      <div class="multi-typeahead__input">
         <template is="dom-repeat" items="[[selectedItems]]">
-          <span>[[item.name]] <iron-icon icon="icons:clear" on-tap="_removeItem"></iron-icon></span>
+          <div class="multi-typeahead__label">[[item.name]] <iron-icon class="multi-typeahead__label-icon" icon="icons:clear" on-tap="_removeItem"></iron-icon></div>
         </template>
-        <input class="multi-typeahead__input" value="{{searchValue::input}}"></input>
+        <input class="multi-typeahead__inner-input" value="{{searchValue::input}}"></input>
       </div>
-      <div class="multi-typeahead__list">
-        <ul>
-          <template is="dom-repeat" items="[[items]]" filter="{{_filter(searchValue)}}">
-            <li class="multi-typeahead__item" on-tap="_selectItem">
-              <img src="[[item.picture.thumbnail]]" alt="" class="multi-typeahead__image">
-              [[item.name]]
+      <div class$="multi-typeahead__list-wrapper [[_isListHidden]]">
+        <ul class="multi-typeahead__list">
+          <template id="list" is="dom-repeat" items="[[items]]" filter="{{_filter(searchValue)}}">
+            <li class="multi-typeahead__list-item" on-tap="_selectItem">
+              <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="multi-typeahead__list-item__image">
+              <span class="multi-typeahead__list-item__text">[[item.name]]</span>
             </li>
           </template>
         </ul>
