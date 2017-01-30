@@ -104,7 +104,7 @@ Typeahead with multi selection
         <div class="multi-typeahead__list-wrapper">
           <ul class="multi-typeahead__list">
             <template id="list" is="dom-repeat" items="[[items]]" filter="{{_filter(_searchValue)}}">
-              <li class="multi-typeahead__list-item" on-tap="_selectItem">
+              <li class="multi-typeahead__list-item" on-tap="_selectItem" on-mouseover="_onFocusItem">
                 <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="multi-typeahead__list-item__image">
                 <span class="multi-typeahead__list-item__text">[[item.name]]</span>
               </li>
@@ -125,6 +125,10 @@ Typeahead with multi selection
         alwaysOpen: {
           type: Boolean,
           value: false
+        },
+
+        _focusedItem: {
+          type: Object
         },
 
         items: {
@@ -199,8 +203,17 @@ Typeahead with multi selection
         }
       },
 
+      _onFocusItem: function(e) {
+        this._focusedItem = e.model.item;
+      },
+
       _onKeyDown: function(e) {
         switch (e.key) {
+          case 'Enter':
+            if (this._focusedItem) {
+              this.push('selectedItems', this._focusedItem);
+            }
+            break;
           case 'Backspace':
             if (this.selectedItems.length) {
               this.splice('selectedItems', this.selectedItems.length - 1, 1);
