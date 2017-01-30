@@ -92,7 +92,7 @@ Typeahead with multi selection
         <template is="dom-repeat" items="[[selectedItems]]">
           <div class="multi-typeahead__label">[[item.name]] <iron-icon class="multi-typeahead__label-icon" icon="icons:clear" on-tap="_removeItem"></iron-icon></div>
         </template>
-        <input class="multi-typeahead__inner-input" value="{{searchValue::input}}"></input>
+        <input id="input" class="multi-typeahead__inner-input" value="{{searchValue::input}}"></input>
       </div>
       <div class$="multi-typeahead__list-wrapper [[_isListHidden]]">
         <ul class="multi-typeahead__list">
@@ -126,6 +126,10 @@ Typeahead with multi selection
         }
       },
 
+      _clearInput: function() {
+        this.searchValue = '';
+      },
+
       _filter: function(searchValue) {
         if (!searchValue) {
           return null;
@@ -142,10 +146,12 @@ Typeahead with multi selection
           return item === e.model.item;
         });
         this.splice('selectedItems', index, 1);
+        this._clearInput();
       },
 
       _selectItem: function(e) {
         this.push('selectedItems', e.model.item);
+        this._clearInput();
       }
 
     });
