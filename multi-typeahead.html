@@ -210,6 +210,7 @@ Typeahead with multi selection
         } else {
           this.$$('.multi-typeahead__list-item').classList.add('hover');
         }
+        this.$$('.hover').scrollIntoView();
         this._focusedItem = this.$$('#list').itemForElement(this.$$('.hover'));
       },
 
