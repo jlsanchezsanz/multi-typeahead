@@ -114,6 +114,15 @@ Typeahead with multi selection
         @apply(--multi-typeahead-list-item-hover);
       }
 
+      .multi-typeahead__list-item.disabled {
+        opacity: 0.5;
+      }
+
+      .multi-typeahead__list-item.disabled.hover {
+        background-color: transparent;
+        cursor: default;
+      }
+
       .multi-typeahead__list-item__image {
         height: 40px;
         @apply(--multi-typeahead-list-item-image);
@@ -140,7 +149,7 @@ Typeahead with multi selection
         <div class="multi-typeahead__list-wrapper">
           <ul class="multi-typeahead__list">
             <template id="list" is="dom-repeat" items="[[items]]" filter="{{_filter(_searchValue)}}">
-              <li class="multi-typeahead__list-item" on-tap="_handleItemClick" on-mouseover="_onFocusItem">
+              <li class$="multi-typeahead__list-item {{_isDisabled(item, selectedItems.length)}}" on-tap="_handleItemClick" on-mouseover="_onFocusItem">
                 <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="multi-typeahead__list-item__image">
                 <span class="multi-typeahead__list-item__text">[[item.name]]</span>
               </li>
@@ -258,6 +267,14 @@ Typeahead with multi selection
         if (!this.alwaysOpen) {
           this._isListVisible = false;
         }
+      },
+
+      _isDisabled: function(item, selectedItems) {
+        console.log('_isDisabled')
+        var found = this.selectedItems.find(function(selectedItem) {
+          return selectedItem === item;
+        });
+        return found ? 'disabled' : '';
       },
 
       _onFocusItem: function(e) {
