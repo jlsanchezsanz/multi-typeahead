@@ -248,6 +248,10 @@ Typeahead with multi selection
               this.splice('selectedItems', this.selectedItems.length - 1, 1);
             }
             break;
+          case 'Escape':
+            this.$.input.blur();
+            this._hideList();
+            break;
           default:
             break;
         }
