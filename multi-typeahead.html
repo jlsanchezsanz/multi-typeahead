@@ -22,6 +22,7 @@ Typeahead with multi selection
         padding: 5px 5px 0 5px;
         flex-wrap: wrap;
         cursor: text;
+        @apply(--multi-typeahead-input);
       }
 
       .multi-typeahead__label {
@@ -29,12 +30,14 @@ Typeahead with multi selection
         padding: 2px 2px 2px 4px;
         margin: 0 5px 5px 0;
         flex: none;
+        @apply(--multi-typeahead-label);
       }
 
       .multi-typeahead__label-icon {
         width: 16px;
         height: 16px;
         cursor: pointer;
+        @apply(--multi-typeahead-label-icon);
       }
 
       .multi-typeahead__inner-input {
@@ -51,25 +54,39 @@ Typeahead with multi selection
         outline: none;
       }
 
-      ::-webkit-input-placeholder { color: var(--multi-typeahead-placeholder-color, --grey-1); }
-      :-moz-placeholder { color: var(--multi-typeahead-placeholder-color, --grey-1); }
-      ::-moz-placeholder { color: var(--multi-typeahead-placeholder-color, --grey-1); }
-      :-ms-input-placeholder { color: var(--multi-typeahead-placeholder-color, --grey-1); }
+      input::-webkit-input-placeholder {
+        color: var(--multi-typeahead-placeholder-color, --grey-1);
+      }
+
+      input:-moz-placeholder {
+        color: var(--multi-typeahead-placeholder-color, --grey-1);
+      }
+
+      input::-moz-placeholder {
+        color: var(--multi-typeahead-placeholder-color, --grey-1);
+      }
+
+      input:-ms-input-placeholder {
+        color: var(--multi-typeahead-placeholder-color, --grey-1);
+      }
+
 
       .multi-typeahead__list-wrapper {
         margin-top: 14px;
         overflow-y: scroll;
         max-height: 310px;
+        @apply(--multi-typeahead-list-wrapper);
       }
 
       .multi-typeahead__list {
         list-style: none;
         padding: 0;
         margin: 0;
+        @apply(--multi-typeahead-list);
       }
 
       .multi-typeahead__list-item:first-of-type {
-        border-top: 1px solid #ccc
+        border-top: 1px solid #ccc;
       }
 
       .multi-typeahead__list-item {
@@ -77,19 +94,23 @@ Typeahead with multi selection
         border-bottom: 1px solid #ccc;
         display: flex;
         cursor: pointer;
+        @apply(--multi-typeahead-list-item);
       }
 
       .multi-typeahead__list-item.hover {
         background-color: #f1f1f1;
+        @apply(--multi-typeahead-list-item-hover);
       }
 
       .multi-typeahead__list-item__image {
         height: 40px;
+        @apply(--multi-typeahead-list-item-image);
       }
 
       .multi-typeahead__list-item__text {
         align-self: center;
         margin-left: 5px;
+        @apply(--multi-typeahead-list-item-text);
       }
     </style>
 
