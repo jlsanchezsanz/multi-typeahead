@@ -159,15 +159,11 @@ Typeahead with multi selection
 
       attached: function() {
         this._isListVisible = this.alwaysOpen;
-        if (!this.alwaysOpen) {
-          this.listen(window, 'tap', '_onTypeaheadClick');
-        }
+        this.listen(window, 'tap', '_onTypeaheadClick');
       },
 
       dettached: function() {
-        if (!this.alwaysOpen) {
-          this.unlisten(window, 'tap', '_onTypeaheadClick');
-        }
+        this.unlisten(window, 'tap', '_onTypeaheadClick');
       },
 
       _clearInput: function() {
@@ -189,13 +185,20 @@ Typeahead with multi selection
         }
       },
 
+      _focusInput: function() {
+        this.$.input.focus();
+      },
+
       _hideList: function() {
-        this._isListVisible = false;
+        if (!this.alwaysOpen) {
+          this._isListVisible = false;
+        }
       },
 
       _onTypeaheadClick: function(e) {
         if (this === e.target || this.contains(e.target)) {
           this._showList();
+          this._focusInput();
         } else {
           this._hideList();
         }
@@ -207,15 +210,19 @@ Typeahead with multi selection
         });
         this.splice('selectedItems', index, 1);
         this._clearInput();
+        this._focusInput();
       },
 
       _selectItem: function(e) {
         this.push('selectedItems', e.model.item);
         this._clearInput();
+        this._focusInput();
       },
 
       _showList: function() {
-        this._isListVisible = true;
+        if (!this.alwaysOpen) {
+          this._isListVisible = true;
+        }
       }
 
     });
