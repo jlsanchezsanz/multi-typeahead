@@ -104,7 +104,7 @@ Typeahead with multi selection
         <div class="multi-typeahead__list-wrapper">
           <ul class="multi-typeahead__list">
             <template id="list" is="dom-repeat" items="[[items]]" filter="{{_filter(_searchValue)}}">
-              <li class="multi-typeahead__list-item" on-tap="_selectItem" on-mouseover="_onFocusItem">
+              <li class="multi-typeahead__list-item" on-tap="_handleItemClick" on-mouseover="_onFocusItem">
                 <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="multi-typeahead__list-item__image">
                 <span class="multi-typeahead__list-item__text">[[item.name]]</span>
               </li>
@@ -213,6 +213,10 @@ Typeahead with multi selection
         this._focusedItem = this.$$('#list').itemForElement(this.$$('.hover'));
       },
 
+      _handleItemClick: function(e) {
+        this._selectItem(e.model.item);
+      },
+
       _hideList: function() {
         if (!this.alwaysOpen) {
           this._isListVisible = false;
@@ -235,7 +239,7 @@ Typeahead with multi selection
             break;
           case 'Enter':
             if (this._focusedItem) {
-              this.push('selectedItems', this._focusedItem);
+              this._selectItem(this._focusedItem);
             }
             break;
           case 'Backspace':
@@ -266,9 +270,11 @@ Typeahead with multi selection
         this._focusInput();
       },
 
-      _selectItem: function(e) {
-        this.push('selectedItems', e.model.item);
-        this._clearInput();
+      _selectItem: function(item) {
+        if (this.selectedItems.indexOf(item) < 0) {
+          this.push('selectedItems', item);
+          this._clearInput();
+        }
         this._focusInput();
       },
 
