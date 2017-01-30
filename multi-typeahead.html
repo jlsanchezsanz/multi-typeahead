@@ -157,6 +157,10 @@ Typeahead with multi selection
         }
       },
 
+      listeners: {
+        'keydown': '_onKeyDown'
+      },
+
       attached: function() {
         this._isListVisible = this.alwaysOpen;
         this.listen(window, 'tap', '_onTypeaheadClick');
@@ -192,6 +196,18 @@ Typeahead with multi selection
       _hideList: function() {
         if (!this.alwaysOpen) {
           this._isListVisible = false;
+        }
+      },
+
+      _onKeyDown: function(e) {
+        switch (e.key) {
+          case 'Backspace':
+            if (this.selectedItems.length) {
+              this.splice('selectedItems', this.selectedItems.length - 1, 1);
+            }
+            break;
+          default:
+            break;
         }
       },
 
