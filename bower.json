@@ -3,7 +3,8 @@
   "description": "Typeahead with multi selection",
   "main": "multi-typeahead.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.4.0"
+    "polymer": "Polymer/polymer#^1.4.0",
+    "iron-icon": "PolymerElements/iron-icon#^1.0.12"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
