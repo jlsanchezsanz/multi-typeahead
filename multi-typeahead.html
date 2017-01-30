@@ -243,7 +243,7 @@ Typeahead with multi selection
             }
             break;
           case 'Backspace':
-            if (this.selectedItems.length) {
+            if (this.selectedItems.length && !this._searchValue) {
               this.splice('selectedItems', this.selectedItems.length - 1, 1);
             }
             break;
