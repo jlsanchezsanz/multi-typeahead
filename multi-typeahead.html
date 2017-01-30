@@ -13,6 +13,7 @@ Typeahead with multi selection
     <style>
       :host {
         display: block;
+        --grey-1: #888;
       }
 
       .multi-typeahead__input {
@@ -49,6 +50,11 @@ Typeahead with multi selection
       .multi-typeahead__inner-input:focus {
         outline: none;
       }
+
+      ::-webkit-input-placeholder { color: var(--multi-typeahead-placeholder-color, --grey-1); }
+      :-moz-placeholder { color: var(--multi-typeahead-placeholder-color, --grey-1); }
+      ::-moz-placeholder { color: var(--multi-typeahead-placeholder-color, --grey-1); }
+      :-ms-input-placeholder { color: var(--multi-typeahead-placeholder-color, --grey-1); }
 
       .multi-typeahead__list-wrapper {
         margin-top: 14px;
@@ -92,11 +98,11 @@ Typeahead with multi selection
         <template is="dom-repeat" items="[[selectedItems]]">
           <div class="multi-typeahead__label">[[item.name]] <iron-icon class="multi-typeahead__label-icon" icon="icons:clear" on-tap="_removeItem"></iron-icon></div>
         </template>
-        <input id="input" class="multi-typeahead__inner-input" value="{{searchValue::input}}"></input>
+        <input id="input" class="multi-typeahead__inner-input" value="{{_searchValue::input}}" placeholder="[[_placeholder]]"></input>
       </div>
-      <div class$="multi-typeahead__list-wrapper [[_isListHidden]]">
+      <div class="multi-typeahead__list-wrapper">
         <ul class="multi-typeahead__list">
-          <template id="list" is="dom-repeat" items="[[items]]" filter="{{_filter(searchValue)}}">
+          <template id="list" is="dom-repeat" items="[[items]]" filter="{{_filter(_searchValue)}}">
             <li class="multi-typeahead__list-item" on-tap="_selectItem">
               <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="multi-typeahead__list-item__image">
               <span class="multi-typeahead__list-item__text">[[item.name]]</span>
@@ -118,6 +124,20 @@ Typeahead with multi selection
           type: Array
         },
 
+        placeholder: {
+          type: String
+        },
+
+        _placeholder: {
+          type: String,
+          computed: '_computePlaceholder(placeholder, _searchValue, selectedItems.length)'
+        },
+
+        _searchValue: {
+          type: String,
+          value: ''
+        },
+
         selectedItems: {
           type: Array,
           value: function() {
@@ -127,16 +147,20 @@ Typeahead with multi selection
       },
 
       _clearInput: function() {
-        this.searchValue = '';
+        this._searchValue = '';
       },
 
-      _filter: function(searchValue) {
-        if (!searchValue) {
+      _computePlaceholder: function(placeholder, _searchValue, selectedItemsLength) {
+        return _searchValue || selectedItemsLength ? '' : placeholder;
+      },
+
+      _filter: function(_searchValue) {
+        if (!_searchValue) {
           return null;
         } else {
-          searchValue = searchValue.toLowerCase();
+          _searchValue = _searchValue.toLowerCase();
           return function(item) {
-            return item.name.toLowerCase().indexOf(searchValue) >= 0;
+            return item.name.toLowerCase().indexOf(_searchValue) >= 0;
           }
         }
       },
