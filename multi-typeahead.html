@@ -79,7 +79,7 @@ Typeahead with multi selection
         cursor: pointer;
       }
 
-      .multi-typeahead__list-item:hover {
+      .multi-typeahead__list-item.hover {
         background-color: #f1f1f1;
       }
 
@@ -197,6 +197,22 @@ Typeahead with multi selection
         this.$.input.focus();
       },
 
+      _handleArrowKey: function(key) {
+        var focusedItem = this.$$('.hover');
+        if (focusedItem) {
+          var list = Polymer.dom(this.root).querySelectorAll('.multi-typeahead__list-item');
+          var focusedIndex = list.indexOf(focusedItem);
+          if ((key === 'ArrowUp' && focusedIndex > 0)
+            || (key === 'ArrowDown' && focusedIndex < list.length - 1)) {
+            focusedItem.classList.remove('hover');
+            list[key === 'ArrowUp' ? focusedIndex - 1 : focusedIndex + 1].classList.add('hover');
+          }
+        } else {
+          this.$$('.multi-typeahead__list-item').classList.add('hover');
+        }
+        this._focusedItem = this.$$('#list').itemForElement(this.$$('.hover'));
+      },
+
       _hideList: function() {
         if (!this.alwaysOpen) {
           this._isListVisible = false;
@@ -204,11 +220,19 @@ Typeahead with multi selection
       },
 
       _onFocusItem: function(e) {
+        if (this.$$('.hover')) {
+          this.$$('.hover').classList.remove('hover');
+        }
+        e.target.classList.add('hover');
         this._focusedItem = e.model.item;
       },
 
       _onKeyDown: function(e) {
         switch (e.key) {
+          case 'ArrowUp':
+          case 'ArrowDown':
+            this._handleArrowKey(e.key);
+            break;
           case 'Enter':
             if (this._focusedItem) {
               this.push('selectedItems', this._focusedItem);
