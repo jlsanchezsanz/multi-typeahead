@@ -62,6 +62,7 @@ Typeahead with multi selection
         font-size: 14px;
       }
 
+      .multi-typeahead__list-item:focus,
       .multi-typeahead__inner-input:focus {
         outline: none;
       }
@@ -149,7 +150,7 @@ Typeahead with multi selection
         <div class="multi-typeahead__list-wrapper">
           <ul class="multi-typeahead__list">
             <template id="list" is="dom-repeat" items="[[items]]" filter="{{_filter(_searchValue)}}">
-              <li class$="multi-typeahead__list-item {{_isDisabled(item, selectedItems.length)}}" on-tap="_handleItemClick" on-mouseover="_onFocusItem">
+              <li class$="multi-typeahead__list-item {{_isDisabled(item, selectedItems.length)}}" on-tap="_handleItemClick" on-mouseover="_onFocusItem" tabindex$="[[index]]">
                 <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="multi-typeahead__list-item__image">
                 <span class="multi-typeahead__list-item__text">[[item.name]]</span>
               </li>
@@ -170,10 +171,6 @@ Typeahead with multi selection
         alwaysOpen: {
           type: Boolean,
           value: false
-        },
-
-        _focusedItem: {
-          type: Object
         },
 
         items: {
@@ -242,25 +239,38 @@ Typeahead with multi selection
         this.$.input.focus();
       },
 
-      _handleArrowKey: function(key) {
-        var focusedItem = this.$$('.hover');
-        if (focusedItem) {
+      _focusItem: function(index) {
+        if (index >= 0) {
+          if (this.$$('.hover')) {
+            this.$$('.hover').classList.remove('hover');
+          }
           var list = Polymer.dom(this.root).querySelectorAll('.multi-typeahead__list-item');
-          var focusedIndex = list.indexOf(focusedItem);
-          if ((key === 'ArrowUp' && focusedIndex > 0)
-            || (key === 'ArrowDown' && focusedIndex < list.length - 1)) {
-            focusedItem.classList.remove('hover');
-            list[key === 'ArrowUp' ? focusedIndex - 1 : focusedIndex + 1].classList.add('hover');
+          var element = list[index];
+          element.focus();
+          element.classList.add('hover');
+        }
+      },
+
+      _handleArrowKey: function(key) {
+        var focusedElement = this.$$('.hover');
+        var index;
+        if (focusedElement) {
+          var list = Polymer.dom(this.root).querySelectorAll('.multi-typeahead__list-item');
+          var focusedIndex = list.indexOf(focusedElement);
+          if (key === 38) {
+            index = this._previousActiveItemIndex(focusedElement);
+          } else if (key === 40) {
+            index = this._nextActiveItemIndex(focusedElement);
           }
         } else {
-          this.$$('.multi-typeahead__list-item').classList.add('hover');
+          index = 0;
         }
-        this.$$('.hover').scrollIntoView();
-        this._focusedItem = this.$$('#list').itemForElement(this.$$('.hover'));
+        this._focusItem(index);
+        this._focusInput();
       },
 
       _handleItemClick: function(e) {
-        this._selectItem(e.model.item);
+        this._selectItem(e.target);
       },
 
       _hideList: function() {
@@ -270,11 +280,21 @@ Typeahead with multi selection
       },
 
       _isDisabled: function(item, selectedItems) {
-        console.log('_isDisabled')
         var found = this.selectedItems.find(function(selectedItem) {
           return selectedItem === item;
         });
         return found ? 'disabled' : '';
+      },
+
+      _nextActiveItemIndex: function(focusedElement) {
+        var list = Polymer.dom(this.root).querySelectorAll('.multi-typeahead__list-item');
+        var index = list.indexOf(focusedElement);
+        var found = false;
+        while (!found && index < list.length - 1) {
+          index += 1;
+          found = !list[index].classList.contains('disabled');
+        }
+        return found ? index : -1;
       },
 
       _onFocusItem: function(e) {
@@ -282,26 +302,23 @@ Typeahead with multi selection
           this.$$('.hover').classList.remove('hover');
         }
         e.target.classList.add('hover');
-        this._focusedItem = e.model.item;
       },
 
       _onKeyDown: function(e) {
-        switch (e.key) {
-          case 'ArrowUp':
-          case 'ArrowDown':
-            this._handleArrowKey(e.key);
+        switch (e.which) {
+          case 38:
+          case 40:
+            this._handleArrowKey(e.which);
             break;
-          case 'Enter':
-            if (this._focusedItem) {
-              this._selectItem(this._focusedItem);
-            }
+          case 13:
+            this._selectItem(this.$$('.hover'));
             break;
-          case 'Backspace':
+          case 8:
             if (this.selectedItems.length && !this._searchValue) {
               this.splice('selectedItems', this.selectedItems.length - 1, 1);
             }
             break;
-          case 'Escape':
+          case 27:
             this.$.input.blur();
             this._hideList();
             break;
@@ -319,6 +336,17 @@ Typeahead with multi selection
         }
       },
 
+      _previousActiveItemIndex: function(focusedElement) {
+        var list = Polymer.dom(this.root).querySelectorAll('.multi-typeahead__list-item');
+        var index = list.indexOf(focusedElement);
+        var found = false;
+        while (!found && index != 0) {
+          index -= 1;
+          found = !list[index].classList.contains('disabled');
+        }
+        return found ? index : -1;
+      },
+
       _removeItem: function(e) {
         var index = this.selectedItems.findIndex(function(item) {
           return item === e.model.item;
@@ -328,12 +356,18 @@ Typeahead with multi selection
         this._focusInput();
       },
 
-      _selectItem: function(item) {
-        if (this.selectedItems.indexOf(item) < 0) {
-          this.push('selectedItems', item);
-          this._clearInput();
+      _selectItem: function(element) {
+        if (element) {
+          var item = this.$$('#list').itemForElement(element);
+          if (this.selectedItems.indexOf(item) < 0) {
+            this.push('selectedItems', item);
+            this._clearInput();
+          }
+          var nextActiveItemIndex = this._nextActiveItemIndex(element)
+          var index = nextActiveItemIndex >= 0 ? nextActiveItemIndex : this._previousActiveItemIndex(element);
+          this._focusItem(index);
+          this._focusInput();
         }
-        this._focusInput();
       },
 
       _showList: function() {
