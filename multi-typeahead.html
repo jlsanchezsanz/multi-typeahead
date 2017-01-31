@@ -303,10 +303,11 @@ Typeahead with multi selection
       },
 
       _onFocusItem: function(e) {
+        var element = e.target.parentNode.classList.contains('multi-typeahead__list-item') ? e.target.parentNode : e.target;
         if (this.$$('.hover')) {
           this.$$('.hover').classList.remove('hover');
         }
-        e.target.classList.add('hover');
+        element.classList.add('hover');
       },
 
       _onKeyDown: function(e) {
