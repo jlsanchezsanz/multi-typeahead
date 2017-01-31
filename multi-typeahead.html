@@ -180,7 +180,7 @@ Typeahead with multi selection
               <li class$="multi-typeahead__list-item {{_isDisabled(item, selectedItems.length)}}" on-tap="_handleItemClick" on-mouseover="_onFocusItem" tabindex$="[[index]]">
                 <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="multi-typeahead__list-item__image">
                 <span class="multi-typeahead__list-item__text">[[item.name]]</span>
-                <iron-icon icon="icons:check"></iron-icon>
+                <iron-icon icon="[[icon]]"></iron-icon>
               </li>
             </template>
           </ul>
@@ -199,6 +199,11 @@ Typeahead with multi selection
         collapse: {
           type: Boolean,
           value: false
+        },
+
+        icon: {
+          type: String,
+          value: 'icons:check'
         },
 
         items: {
