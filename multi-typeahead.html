@@ -149,7 +149,7 @@ Typeahead with multi selection
       <template is="dom-if" if="[[_isListVisible]]">
         <div class="multi-typeahead__list-wrapper">
           <ul class="multi-typeahead__list">
-            <template id="list" is="dom-repeat" items="[[items]]" filter="{{_filter(_searchValue)}}">
+            <template id="list" is="dom-repeat" items="[[items]]" filter="{{_filter(_searchValue)}}" rendered-item-count="{{_renderedCount}}">
               <li class$="multi-typeahead__list-item {{_isDisabled(item, selectedItems.length)}}" on-tap="_handleItemClick" on-mouseover="_onFocusItem" tabindex$="[[index]]">
                 <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="multi-typeahead__list-item__image">
                 <span class="multi-typeahead__list-item__text">[[item.name]]</span>
@@ -188,6 +188,11 @@ Typeahead with multi selection
         _placeholder: {
           type: String,
           computed: '_computePlaceholder(placeholder, _searchValue, selectedItems.length)'
+        },
+
+        _renderedCount: {
+          type: Number,
+          observer: '_renderedCountChanged'
         },
 
         _searchValue: {
@@ -330,6 +335,9 @@ Typeahead with multi selection
       _onTypeaheadClick: function(e) {
         if (this === e.target || this.contains(e.target)) {
           this._showList();
+          if (!this.$$('.hover')) {
+            this._focusItem(this._nextActiveItemIndex());
+          }
           this._focusInput();
         } else {
           this._hideList();
@@ -354,6 +362,13 @@ Typeahead with multi selection
         this.splice('selectedItems', index, 1);
         this._clearInput();
         this._focusInput();
+      },
+
+      _renderedCountChanged: function(newValue, oldValue) {
+        if (oldValue) {
+          this._focusItem(this._nextActiveItemIndex());
+          this._focusInput();
+        }
       },
 
       _selectItem: function(element) {
