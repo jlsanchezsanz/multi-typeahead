@@ -295,10 +295,10 @@ Typeahead with multi selection
       },
 
       _handleArrowKey: function(key) {
+        var list = Polymer.dom(this.root).querySelectorAll('.multi-typeahead__list-item');
         var focusedElement = this.$$('.hover');
         var index;
         if (focusedElement) {
-          var list = Polymer.dom(this.root).querySelectorAll('.multi-typeahead__list-item');
           var focusedIndex = list.indexOf(focusedElement);
           if (key === 38) {
             index = this._previousActiveItemIndex(focusedElement);
@@ -306,7 +306,7 @@ Typeahead with multi selection
             index = this._nextActiveItemIndex(focusedElement);
           }
         } else {
-          index = 0;
+          index = list.length ? 0 : -1;
         }
         this._focusItem(index);
         this._focusInput();
@@ -352,12 +352,15 @@ Typeahead with multi selection
         switch (e.which) {
           case 38:
           case 40:
+            e.preventDefault();
             this._handleArrowKey(e.which);
             break;
           case 13:
+            e.preventDefault();
             this._selectItem(this.$$('.hover'));
             break;
           case 8:
+            e.preventDefault();
             if (this.selectedItems.length && !this._searchValue) {
               this.splice('selectedItems', this.selectedItems.length - 1, 1);
               this._focusItem(this._nextActiveItemIndex());
@@ -365,6 +368,7 @@ Typeahead with multi selection
             }
             break;
           case 27:
+            e.preventDefault();
             this.$.input.blur();
             this._hideList();
             break;
