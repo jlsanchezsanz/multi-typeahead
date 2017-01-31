@@ -10,6 +10,7 @@
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../iron-ajax/iron-ajax.html">
     <link rel="import" href="../multi-typeahead.html">
 
     <style is="custom-style" include="demo-pages-shared-styles">
@@ -19,8 +20,13 @@
     <div class="vertical-section-container centered">
       <h3>Basic multi-typeahead demo</h3>
       <demo-snippet>
-        <template>
-          <multi-typeahead></multi-typeahead>
+        <template is="dom-bind">
+        <iron-ajax
+          auto
+          url="./users.json"
+          last-response="{{users}}"></iron-ajax>
+
+          <multi-typeahead items="[[users.results]]" placeholder="Find a user" always-open></multi-typeahead>
         </template>
       </demo-snippet>
     </div>
