@@ -149,7 +149,7 @@ Typeahead with multi selection
       <template is="dom-if" if="[[_isListVisible]]">
         <div class="multi-typeahead__list-wrapper">
           <ul class="multi-typeahead__list">
-            <template id="list" is="dom-repeat" items="[[items]]" filter="{{_filter(_searchValue)}}" rendered-item-count="{{_renderedCount}}">
+            <template id="list" is="dom-repeat" items="[[items]]" filter="[[_filter(_searchValue, selectedItems.length)]]" rendered-item-count="{{_renderedCount}}">
               <li class$="multi-typeahead__list-item {{_isDisabled(item, selectedItems.length)}}" on-tap="_handleItemClick" on-mouseover="_onFocusItem" tabindex$="[[index]]">
                 <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="multi-typeahead__list-item__image">
                 <span class="multi-typeahead__list-item__text">[[item.name]]</span>
@@ -188,6 +188,11 @@ Typeahead with multi selection
         _placeholder: {
           type: String,
           computed: '_computePlaceholder(placeholder, _searchValue, selectedItems.length)'
+        },
+
+        removeSelected: {
+          type: Boolean,
+          value: false
         },
 
         _renderedCount: {
@@ -229,14 +234,14 @@ Typeahead with multi selection
         return _searchValue || selectedItemsLength ? '' : placeholder;
       },
 
-      _filter: function(_searchValue) {
-        if (!_searchValue) {
+      _filter: function(_searchValue, selectedItemsLength) {
+        if (!_searchValue && !selectedItemsLength) {
           return null;
         } else {
           _searchValue = _searchValue.toLowerCase();
           return function(item) {
-            return item.name.toLowerCase().indexOf(_searchValue) >= 0;
-          }
+            return (this.removeSelected ? this.selectedItems.indexOf(item) < 0 : true) && item.name.toLowerCase().indexOf(_searchValue) >= 0;
+          }.bind(this)
         }
       },
 
