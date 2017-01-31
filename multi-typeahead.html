@@ -321,6 +321,8 @@ Typeahead with multi selection
           case 8:
             if (this.selectedItems.length && !this._searchValue) {
               this.splice('selectedItems', this.selectedItems.length - 1, 1);
+              this._focusItem(this._nextActiveItemIndex());
+              this._focusInput();
             }
             break;
           case 27:
@@ -361,11 +363,12 @@ Typeahead with multi selection
         });
         this.splice('selectedItems', index, 1);
         this._clearInput();
+        this._focusItem(this._nextActiveItemIndex());
         this._focusInput();
       },
 
       _renderedCountChanged: function(newValue, oldValue) {
-        if (oldValue) {
+        if (oldValue >= 0) {
           this._focusItem(this._nextActiveItemIndex());
           this._focusInput();
         }
