@@ -16,6 +16,11 @@ Typeahead with multi selection
         --grey-1: #888;
       }
 
+      .multi-typeahead__container {
+        position: relative;
+        @apply(--multi-typeahead-container);
+      }
+
       .multi-typeahead__input {
         border: 1px solid #ccc;
         display: flex;
@@ -50,6 +55,7 @@ Typeahead with multi selection
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
+        @apply(--multi-typeahead-label-image);
       }
 
       .multi-typeahead__inner-input {
@@ -83,8 +89,15 @@ Typeahead with multi selection
         color: var(--multi-typeahead-placeholder-color, --grey-1);
       }
 
+      :host[collapse] .multi-typeahead__list-wrapper {
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+        @apply(--multi-typeahead-list-wrapper-collapse);
+      }
 
       .multi-typeahead__list-wrapper {
+        background-color: #fff;
         margin-top: 14px;
         overflow-y: scroll;
         max-height: 310px;
@@ -117,11 +130,13 @@ Typeahead with multi selection
 
       .multi-typeahead__list-item.disabled {
         opacity: 0.5;
+        @apply(--multi-typeahead-list-item-disabled);
       }
 
       .multi-typeahead__list-item.disabled.hover {
         background-color: transparent;
         cursor: default;
+        @apply(--multi-typeahead-list-item-hover);
       }
 
       .multi-typeahead__list-item__image {
@@ -168,7 +183,7 @@ Typeahead with multi selection
       is: 'multi-typeahead',
 
       properties: {
-        alwaysOpen: {
+        collapse: {
           type: Boolean,
           value: false
         },
@@ -218,7 +233,7 @@ Typeahead with multi selection
       },
 
       attached: function() {
-        this._isListVisible = this.alwaysOpen;
+        this._isListVisible = !this.collapse;
         this.listen(window, 'tap', '_onTypeaheadClick');
       },
 
@@ -284,7 +299,7 @@ Typeahead with multi selection
       },
 
       _hideList: function() {
-        if (!this.alwaysOpen) {
+        if (this.collapse) {
           this._isListVisible = false;
         }
       },
@@ -395,7 +410,7 @@ Typeahead with multi selection
       },
 
       _showList: function() {
-        if (!this.alwaysOpen) {
+        if (this.collapse) {
           this._isListVisible = true;
         }
       }
