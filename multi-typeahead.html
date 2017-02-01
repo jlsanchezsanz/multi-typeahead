@@ -214,6 +214,11 @@ Typeahead with multi selection
           type: Boolean
         },
 
+        open: {
+          type: Boolean,
+          observer: '_openChanged'
+        },
+
         placeholder: {
           type: String
         },
@@ -247,7 +252,17 @@ Typeahead with multi selection
       },
 
       listeners: {
-        'keydown': '_onKeyDown'
+        'keydown': '_onKeyDown',
+        'click': '_onFocus',
+        'focus': '_onFocus'
+      },
+
+      _onFocus: function(e) {
+        this.open = true;
+        if (!this.$$('.hover')) {
+          this._focusItem(this._nextActiveItemIndex());
+        }
+        this._focusInput();
       },
 
       attached: function() {
@@ -311,13 +326,6 @@ Typeahead with multi selection
         this._selectItem(e.target);
       },
 
-      _hideList: function() {
-        if (this.collapse) {
-          this.unlisten(window, 'click', '_onTypeaheadClick');
-          this._isListVisible = false;
-        }
-      },
-
       _isDisabled: function(item, selectedItems) {
         var found = this.selectedItems.find(function(selectedItem) {
           return selectedItem === item;
@@ -365,7 +373,7 @@ Typeahead with multi selection
           case 27:
             e.preventDefault();
             this.$.input.blur();
-            this._hideList();
+            this.open = false;
             break;
           default:
             break;
@@ -374,13 +382,21 @@ Typeahead with multi selection
 
       _onTypeaheadClick: function(e) {
         if (this === e.target || this.contains(e.target)) {
-          this._showList();
-          if (!this.$$('.hover')) {
-            this._focusItem(this._nextActiveItemIndex());
-          }
-          this._focusInput();
+          this.open = true;
         } else {
-          this._hideList();
+          this.open = false;
+        }
+      },
+
+      _openChanged: function(open) {
+        if (this.collapse) {
+          if (this.open) {
+            this.listen(window, 'click', '_onTypeaheadClick');
+            this._isListVisible = true;
+          } else {
+            this.unlisten(window, 'click', '_onTypeaheadClick');
+            this._isListVisible = false;
+          }
         }
       },
 
@@ -425,13 +441,6 @@ Typeahead with multi selection
           this._focusInput();
         }
       },
-
-      _showList: function() {
-        if (this.collapse) {
-          this.listen(window, 'click', '_onTypeaheadClick');
-          this._isListVisible = true;
-        }
-      }
 
     });
   </script>
