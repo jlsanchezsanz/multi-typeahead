@@ -360,7 +360,6 @@ Typeahead with multi selection
             this._selectItem(this.$$('.hover'));
             break;
           case 8:
-            e.preventDefault();
             if (this.selectedItems.length && !this._searchValue) {
               this.splice('selectedItems', this.selectedItems.length - 1, 1);
               this._focusItem(this._nextActiveItemIndex());
