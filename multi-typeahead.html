@@ -252,11 +252,6 @@ Typeahead with multi selection
 
       attached: function() {
         this._isListVisible = !this.collapse;
-        this.listen(window, 'tap', '_onTypeaheadClick');
-      },
-
-      dettached: function() {
-        this.unlisten(window, 'tap', '_onTypeaheadClick');
       },
 
       _clearInput: function() {
@@ -318,6 +313,7 @@ Typeahead with multi selection
 
       _hideList: function() {
         if (this.collapse) {
+          this.unlisten(window, 'click', '_onTypeaheadClick');
           this._isListVisible = false;
         }
       },
@@ -432,6 +428,7 @@ Typeahead with multi selection
 
       _showList: function() {
         if (this.collapse) {
+          this.listen(window, 'click', '_onTypeaheadClick');
           this._isListVisible = true;
         }
       }
