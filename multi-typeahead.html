@@ -18,7 +18,7 @@ Typeahead with multi selection
 
       .container {
         position: relative;
-        @apply(--multi-typeahead-container);
+        @apply --multi-typeahead-container;
       }
 
       .input {
@@ -27,7 +27,7 @@ Typeahead with multi selection
         padding: 5px 5px 0 5px;
         flex-wrap: wrap;
         cursor: text;
-        @apply(--multi-typeahead-input);
+        @apply --multi-typeahead-input;
       }
 
       .label {
@@ -36,14 +36,14 @@ Typeahead with multi selection
         margin: 0 5px 5px 0;
         flex: none;
         position: relative;
-        @apply(--multi-typeahead-label);
+        @apply --multi-typeahead-label;
       }
 
       .label-icon {
         width: 16px;
         height: 16px;
         cursor: pointer;
-        @apply(--multi-typeahead-label-icon);
+        @apply --multi-typeahead-label-icon;
       }
 
       .label-image {
@@ -55,7 +55,7 @@ Typeahead with multi selection
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
-        @apply(--multi-typeahead-label-image);
+        @apply --multi-typeahead-label-image;
       }
 
       .inner-input {
@@ -73,18 +73,9 @@ Typeahead with multi selection
         outline: none;
       }
 
-      input::-webkit-input-placeholder {
-        color: var(--multi-typeahead-placeholder-color, var(--grey-1));
-      }
-
-      input:-moz-placeholder {
-        color: var(--multi-typeahead-placeholder-color, var(--grey-1));
-      }
-
-      input::-moz-placeholder {
-        color: var(--multi-typeahead-placeholder-color, var(--grey-1));
-      }
-
+      input::-webkit-input-placeholder,
+      input:-moz-placeholder,
+      input::-moz-placeholder,
       input:-ms-input-placeholder {
         color: var(--multi-typeahead-placeholder-color, var(--grey-1));
       }
@@ -93,7 +84,7 @@ Typeahead with multi selection
         width: 100%;
         position: absolute;
         z-index: 1;
-        @apply(--multi-typeahead-list-wrapper-collapse);
+        @apply --multi-typeahead-list-wrapper-collapse;
       }
 
       .list-wrapper {
@@ -101,14 +92,14 @@ Typeahead with multi selection
         margin-top: 14px;
         overflow-y: scroll;
         max-height: 310px;
-        @apply(--multi-typeahead-list-wrapper);
+        @apply --multi-typeahead-list-wrapper;
       }
 
       .list {
         list-style: none;
         padding: 0;
         margin: 0;
-        @apply(--multi-typeahead-list);
+        @apply --multi-typeahead-list;
       }
 
       .list-item:first-of-type {
@@ -120,46 +111,46 @@ Typeahead with multi selection
         border-bottom: 1px solid #ccc;
         display: flex;
         cursor: pointer;
-        @apply(--multi-typeahead-list-item);
+        @apply --multi-typeahead-list-item;
       }
 
       .list-item.hover {
         background-color: #f1f1f1;
-        @apply(--multi-typeahead-list-item-hover);
+        @apply --multi-typeahead-list-item-hover;
       }
 
       .list-item.disabled {
         opacity: 0.5;
-        @apply(--multi-typeahead-list-item-disabled);
+        @apply --multi-typeahead-list-item-disabled;
       }
 
       .list-item.disabled.hover {
         background-color: transparent;
         cursor: default;
-        @apply(--multi-typeahead-list-item-hover);
+        @apply --multi-typeahead-list-item-hover;
       }
 
       .list-item__image {
         height: 40px;
-        @apply(--multi-typeahead-list-item-image);
+        @apply --multi-typeahead-list-item-image;
       }
 
       .list-item__text {
         align-self: center;
         margin-left: 5px;
-        @apply(--multi-typeahead-list-item-text);
+        @apply --multi-typeahead-list-item-text;
       }
 
       .list-item > iron-icon {
         display: none;
-        @apply(--multi-typeahead-list-item-icon);
+        @apply --multi-typeahead-list-item-icon;
       }
 
       .list-item.disabled > iron-icon {
         display: block;
         align-self: center;
         margin-left: auto;
-        @apply(--multi-typeahead-list-item-disabled-icon);
+        @apply --multi-typeahead-list-item-disabled-icon;
       }
     </style>
 
