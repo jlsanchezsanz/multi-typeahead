@@ -16,12 +16,12 @@ Typeahead with multi selection
         --grey-1: #888;
       }
 
-      .multi-typeahead__container {
+      .container {
         position: relative;
         @apply(--multi-typeahead-container);
       }
 
-      .multi-typeahead__input {
+      .input {
         border: 1px solid #ccc;
         display: flex;
         padding: 5px 5px 0 5px;
@@ -30,7 +30,7 @@ Typeahead with multi selection
         @apply(--multi-typeahead-input);
       }
 
-      .multi-typeahead__label {
+      .label {
         background-color: #ccc;
         padding: 2px 2px 2px 22px;
         margin: 0 5px 5px 0;
@@ -39,14 +39,14 @@ Typeahead with multi selection
         @apply(--multi-typeahead-label);
       }
 
-      .multi-typeahead__label-icon {
+      .label-icon {
         width: 16px;
         height: 16px;
         cursor: pointer;
         @apply(--multi-typeahead-label-icon);
       }
 
-      .multi-typeahead__label-image {
+      .label-image {
         display: inline-block;
         left: 2px;
         height: 17px;
@@ -58,7 +58,7 @@ Typeahead with multi selection
         @apply(--multi-typeahead-label-image);
       }
 
-      .multi-typeahead__inner-input {
+      .inner-input {
         border: none;
         width: 100%;
         max-width: 100%;
@@ -68,8 +68,8 @@ Typeahead with multi selection
         font-size: 14px;
       }
 
-      .multi-typeahead__list-item:focus,
-      .multi-typeahead__inner-input:focus {
+      .list-item:focus,
+      .inner-input:focus {
         outline: none;
       }
 
@@ -89,14 +89,14 @@ Typeahead with multi selection
         color: var(--multi-typeahead-placeholder-color, var(--grey-1));
       }
 
-      :host[collapse] .multi-typeahead__list-wrapper {
+      :host[collapse] .list-wrapper {
         width: 100%;
         position: absolute;
         z-index: 1;
         @apply(--multi-typeahead-list-wrapper-collapse);
       }
 
-      .multi-typeahead__list-wrapper {
+      .list-wrapper {
         background-color: #fff;
         margin-top: 14px;
         overflow-y: scroll;
@@ -104,18 +104,18 @@ Typeahead with multi selection
         @apply(--multi-typeahead-list-wrapper);
       }
 
-      .multi-typeahead__list {
+      .list {
         list-style: none;
         padding: 0;
         margin: 0;
         @apply(--multi-typeahead-list);
       }
 
-      .multi-typeahead__list-item:first-of-type {
+      .list-item:first-of-type {
         border-top: 1px solid #ccc;
       }
 
-      .multi-typeahead__list-item {
+      .list-item {
         padding: 5px;
         border-bottom: 1px solid #ccc;
         display: flex;
@@ -123,39 +123,39 @@ Typeahead with multi selection
         @apply(--multi-typeahead-list-item);
       }
 
-      .multi-typeahead__list-item.hover {
+      .list-item.hover {
         background-color: #f1f1f1;
         @apply(--multi-typeahead-list-item-hover);
       }
 
-      .multi-typeahead__list-item.disabled {
+      .list-item.disabled {
         opacity: 0.5;
         @apply(--multi-typeahead-list-item-disabled);
       }
 
-      .multi-typeahead__list-item.disabled.hover {
+      .list-item.disabled.hover {
         background-color: transparent;
         cursor: default;
         @apply(--multi-typeahead-list-item-hover);
       }
 
-      .multi-typeahead__list-item__image {
+      .list-item__image {
         height: 40px;
         @apply(--multi-typeahead-list-item-image);
       }
 
-      .multi-typeahead__list-item__text {
+      .list-item__text {
         align-self: center;
         margin-left: 5px;
         @apply(--multi-typeahead-list-item-text);
       }
 
-      .multi-typeahead__list-item > iron-icon {
+      .list-item > iron-icon {
         display: none;
         @apply(--multi-typeahead-list-item-icon);
       }
 
-      .multi-typeahead__list-item.disabled > iron-icon {
+      .list-item.disabled > iron-icon {
         display: block;
         align-self: center;
         margin-left: auto;
@@ -163,23 +163,23 @@ Typeahead with multi selection
       }
     </style>
 
-    <div class="multi-typeahead__container">
-      <div class="multi-typeahead__input">
+    <div class="container">
+      <div class="input">
         <template is="dom-repeat" items="[[selectedItems]]">
-          <div class="multi-typeahead__label">
-            <span style$="background-image: url([[item.picture.thumbnail]])" class="multi-typeahead__label-image"></span>
-            [[item.name]] <iron-icon class="multi-typeahead__label-icon" icon="icons:clear" on-tap="_removeItem"></iron-icon>
+          <div class="label">
+            <span style$="background-image: url([[item.picture.thumbnail]])" class="label-image"></span>
+            [[item.name]] <iron-icon class="label-icon" icon="icons:clear" on-tap="_removeItem"></iron-icon>
           </div>
         </template>
-        <input id="input" class="multi-typeahead__inner-input" value="{{_searchValue::input}}" placeholder="[[_placeholder]]"></input>
+        <input id="input" class="inner-input" value="{{_searchValue::input}}" placeholder="[[_placeholder]]"></input>
       </div>
       <template is="dom-if" if="[[_isListVisible]]">
-        <div class="multi-typeahead__list-wrapper">
-          <ul class="multi-typeahead__list">
+        <div class="list-wrapper">
+          <ul class="list">
             <template id="list" is="dom-repeat" items="[[items]]" filter="[[_filter(_searchValue, selectedItems.length)]]" rendered-item-count="{{_renderedCount}}">
-              <li class$="multi-typeahead__list-item {{_isDisabled(item, selectedItems.length)}}" on-tap="_handleItemClick" on-mouseover="_onFocusItem" tabindex$="[[index]]">
-                <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="multi-typeahead__list-item__image">
-                <span class="multi-typeahead__list-item__text">[[item.name]]</span>
+              <li class$="list-item {{_isDisabled(item, selectedItems.length)}}" on-tap="_handleItemClick" on-mouseover="_onFocusItem" tabindex$="[[index]]">
+                <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="list-item__image">
+                <span class="list-item__text">[[item.name]]</span>
                 <iron-icon icon="[[icon]]"></iron-icon>
               </li>
             </template>
@@ -297,7 +297,7 @@ Typeahead with multi selection
           if (this.$$('.hover')) {
             this.$$('.hover').classList.remove('hover');
           }
-          var list = Polymer.dom(this.root).querySelectorAll('.multi-typeahead__list-item');
+          var list = Polymer.dom(this.root).querySelectorAll('.list-item');
           var element = list[index];
           element.focus();
           element.classList.add('hover');
@@ -305,7 +305,7 @@ Typeahead with multi selection
       },
 
       _handleArrowKey: function(key) {
-        var list = Polymer.dom(this.root).querySelectorAll('.multi-typeahead__list-item');
+        var list = Polymer.dom(this.root).querySelectorAll('.list-item');
         var focusedElement = this.$$('.hover');
         var index;
         if (focusedElement) {
@@ -334,7 +334,7 @@ Typeahead with multi selection
       },
 
       _nextActiveItemIndex: function(focusedElement) {
-        var list = Polymer.dom(this.root).querySelectorAll('.multi-typeahead__list-item');
+        var list = Polymer.dom(this.root).querySelectorAll('.list-item');
         var index = list.indexOf(focusedElement);
         var found = false;
         while (!found && index < list.length - 1) {
@@ -345,7 +345,7 @@ Typeahead with multi selection
       },
 
       _onFocusItem: function(e) {
-        var element = e.target.parentNode.classList.contains('multi-typeahead__list-item') ? e.target.parentNode : e.target;
+        var element = e.target.parentNode.classList.contains('list-item') ? e.target.parentNode : e.target;
         if (this.$$('.hover')) {
           this.$$('.hover').classList.remove('hover');
         }
@@ -401,7 +401,7 @@ Typeahead with multi selection
       },
 
       _previousActiveItemIndex: function(focusedElement) {
-        var list = Polymer.dom(this.root).querySelectorAll('.multi-typeahead__list-item');
+        var list = Polymer.dom(this.root).querySelectorAll('.list-item');
         var index = list.indexOf(focusedElement);
         var found = false;
         while (!found && index != 0) {
