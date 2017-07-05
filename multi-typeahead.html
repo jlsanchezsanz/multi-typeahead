@@ -160,7 +160,7 @@ Typeahead with multi selection
         <template is="dom-repeat" items="[[selectedItems]]">
           <div class="label">
             <span style$="background-image: url([[item.picture.thumbnail]])" class="label-image"></span>
-            [[item.name]] <iron-icon class="label-icon" icon="icons:clear" on-tap="_removeItem"></iron-icon>
+            [[item.name]] <iron-icon class="label-icon" icon="[[clearIcon]]" on-tap="_removeItem"></iron-icon>
           </div>
         </template>
         <input id="input" class="inner-input" value="{{_searchValue::input}}" placeholder="[[_placeholder]]"></input>
@@ -172,7 +172,7 @@ Typeahead with multi selection
               <li class$="list-item {{_isDisabled(item, selectedItems.length)}}" on-tap="_handleItemClick" on-mouseover="_onFocusItem" tabindex$="[[index]]">
                 <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="list-item__image">
                 <span class="list-item__text">[[item.name]]</span>
-                <iron-icon icon="[[icon]]"></iron-icon>
+                <iron-icon icon="[[checkIcon]]"></iron-icon>
               </li>
             </template>
           </ul>
@@ -193,9 +193,14 @@ Typeahead with multi selection
           value: false
         },
 
-        icon: {
+        checkIcon: {
           type: String,
           value: 'icons:check'
+        },
+
+        clearIcon: {
+          type: String,
+          value: 'icons:clear'
         },
 
         items: {
