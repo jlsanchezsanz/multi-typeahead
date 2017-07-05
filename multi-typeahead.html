@@ -255,6 +255,7 @@ Typeahead with multi selection
       },
 
       _onFocus: function(e) {
+        e.stopPropagation();
         this.open = true;
         if (!this.$$('.hover')) {
           this._focusItem(this._nextActiveItemIndex());
@@ -342,6 +343,7 @@ Typeahead with multi selection
       },
 
       _onFocusItem: function(e) {
+        e.stopPropagation();
         var element = e.target.parentNode.classList.contains('list-item') ? e.target.parentNode : e.target;
         if (this.$$('.hover')) {
           this.$$('.hover').classList.remove('hover');
@@ -350,6 +352,7 @@ Typeahead with multi selection
       },
 
       _onKeyDown: function(e) {
+        e.stopPropagation();
         switch (e.which) {
           case 38:
           case 40:
@@ -378,6 +381,7 @@ Typeahead with multi selection
       },
 
       _onTypeaheadClick: function(e) {
+        e.stopPropagation();
         if (this === e.target || this.contains(e.target)) {
           this.open = true;
         } else {
