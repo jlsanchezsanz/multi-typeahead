@@ -163,13 +163,27 @@ Typeahead with multi selection
             [[item.name]] <iron-icon class="label-icon" icon="[[clearIcon]]" on-tap="_removeItem"></iron-icon>
           </div>
         </template>
-        <input id="input" class="inner-input" value="{{_searchValue::input}}" placeholder="[[_placeholder]]"></input>
+        <input
+          id="input"
+          class="inner-input"
+          value="{{_searchValue::input}}"
+          placeholder="[[_placeholder]]">
+        </input>
       </div>
       <template is="dom-if" if="[[_isListVisible]]">
         <div class="list-wrapper">
           <ul class="list">
-            <template id="list" is="dom-repeat" items="[[items]]" filter="[[_filter(_searchValue, selectedItems.length)]]" rendered-item-count="{{_renderedCount}}">
-              <li class$="list-item {{_isDisabled(item, selectedItems.length)}}" on-tap="_handleItemClick" on-mouseover="_onFocusItem" tabindex$="[[index]]">
+            <template
+              id="list"
+              is="dom-repeat"
+              items="[[items]]"
+              filter="[[_filter(_searchValue, selectedItems.length)]]"
+              rendered-item-count="{{_renderedCount}}">
+              <li
+                class$="list-item {{_isDisabled(item, selectedItems.length)}}"
+                on-tap="_handleItemClick"
+                on-mouseover="_onFocusItem"
+                tabindex$="[[index]]">
                 <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="list-item__image">
                 <span class="list-item__text">[[item.name]]</span>
                 <iron-icon icon="[[checkIcon]]"></iron-icon>
@@ -281,7 +295,8 @@ Typeahead with multi selection
         } else {
           _searchValue = _searchValue.toLowerCase();
           return function(item) {
-            return (this.removeSelected ? this.selectedItems.indexOf(item) < 0 : true) && item.name.toLowerCase().indexOf(_searchValue) >= 0;
+            return (this.removeSelected ? this.selectedItems.indexOf(item) < 0 : true)
+              && item.name.toLowerCase().indexOf(_searchValue) >= 0;
           }.bind(this)
         }
       },
@@ -344,7 +359,9 @@ Typeahead with multi selection
 
       _onFocusItem: function(e) {
         e.stopPropagation();
-        var element = e.target.parentNode.classList.contains('list-item') ? e.target.parentNode : e.target;
+        var element = e.target.parentNode.classList.contains('list-item')
+          ? e.target.parentNode
+          : e.target;
         if (this.$$('.hover')) {
           this.$$('.hover').classList.remove('hover');
         }
@@ -437,7 +454,9 @@ Typeahead with multi selection
             this._clearInput();
           }
           var nextActiveItemIndex = this._nextActiveItemIndex(element)
-          var index = nextActiveItemIndex >= 0 ? nextActiveItemIndex : this._previousActiveItemIndex(element);
+          var index = nextActiveItemIndex >= 0
+            ? nextActiveItemIndex
+            : this._previousActiveItemIndex(element);
           this._focusItem(index);
           this._focusInput();
         }
