@@ -167,10 +167,10 @@ Typeahead with multi selection
           id="input"
           class="inner-input"
           value="{{_searchValue::input}}"
-          placeholder="[[_placeholder]]">
+          placeholder="[[_computePlaceholder(placeholder, _searchValue, selectedItems.length)]]">
         </input>
       </div>
-      <template is="dom-if" if="[[_isListVisible]]">
+      <template is="dom-if" if="[[open]]">
         <div class="list-wrapper">
           <ul class="list">
             <template
@@ -221,10 +221,6 @@ Typeahead with multi selection
           type: Array
         },
 
-        _isListVisible: {
-          type: Boolean
-        },
-
         open: {
           type: Boolean,
           observer: '_openChanged'
@@ -232,11 +228,6 @@ Typeahead with multi selection
 
         placeholder: {
           type: String
-        },
-
-        _placeholder: {
-          type: String,
-          computed: '_computePlaceholder(placeholder, _searchValue, selectedItems.length)'
         },
 
         removeSelected: {
@@ -278,7 +269,7 @@ Typeahead with multi selection
       },
 
       attached: function() {
-        this._isListVisible = !this.collapse;
+        this.open = !this.collapse;
       },
 
       _clearInput: function() {
@@ -410,10 +401,8 @@ Typeahead with multi selection
         if (this.collapse) {
           if (this.open) {
             this.listen(window, 'click', '_onTypeaheadClick');
-            this._isListVisible = true;
           } else {
             this.unlisten(window, 'click', '_onTypeaheadClick');
-            this._isListVisible = false;
           }
         }
       },
