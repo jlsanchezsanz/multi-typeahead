@@ -2,8 +2,63 @@
 <link rel="import" href="../iron-icon/iron-icon.html">
 
 <!--
-`multi-typeahead`
-Typeahead with multi selection
+`multi-typeahead` Typeahead with multiple selection.
+
+### Examples
+
+*Simple:
+
+  ```html
+  <multi-typeahead
+    items="[[users]]"
+    selected-items="{{selectedUsers}}">
+  </multi-typeahead>
+  ```
+
+*With collapsed list:
+
+  ```html
+  <multi-typeahead
+    items="[[users]]"
+    collapse
+    selected-items="{{selectedUsers}}">
+  </multi-typeahead>
+  ```
+
+*Multi-typeahead that hides selected items:
+
+  ```html
+  <multi-typeahead
+    items="[[users]]"
+    remove-selected
+    selected-items="{{selectedUsers}}">
+  </multi-typeahead>
+  ```
+
+### Styling
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--multi-typeahead-container`                 | Mixin applied to the container that wraps the input and the list | `{}`
+`--multi-typeahead-input`                     | Mixin applied to the input | `{}`
+`--multi-typeahead-label`                     | Mixin applied to the label of the items | `{}`
+`--multi-typeahead-label-icon`                | Mixin applied to the label icon of the items | `{}`
+`--multi-typeahead-label-image`               | Mixin applied to the image of the items | `{}`
+`--multi-typeahead-placeholder-color`         | Color of the placeholder text | `#888`
+`--multi-typeahead-list-wrapper-collapse`     | Mixin applied to the list wrapper when collapsed | `{}`
+`--multi-typeahead-list-wrapper`              | Mixin applied to the list wrapper | `{}`
+`--multi-typeahead-list`                      | Mixin applied to the list | `{}`
+`--multi-typeahead-list-item-first`           | Mixin applied to the first item in the list | `{}`
+`--multi-typeahead-list-item`                 | Mixin applied to the items in the list | `{}`
+`--multi-typeahead-list-item-hover`           | Mixin applied to the hovered item | `{}`
+`--multi-typeahead-list-item-disabled`        | Mixin applied to the disabled item | `{}`
+`--multi-typeahead-list-item-didsabled-hover` | Mixin applied to the hovered disabled item | `{}`
+`--multi-typeahead-list-item-image`           | Mixin applied to the image | `{}`
+`--multi-typeahead-list-item-text`            | Mixin applied to the text of the item | `{}`
+`--multi-typeahead-list-item-icon`            | Mixin applied to the icon of the item | `{}`
+`--multi-typeahead-list-item-disabled-icon`   | Mixin applied to the icon when disabled | `{}`
 
 @demo demo/index.html 
 -->
@@ -202,51 +257,84 @@ Typeahead with multi selection
       is: 'multi-typeahead',
 
       properties: {
+        /**
+         * If true, the list collapses. Otherwise it's
+         * displayed below the input.
+         */
         collapse: {
           type: Boolean,
           value: false
         },
 
+        /**
+         * The icon displayed on selected items.
+         */
         checkIcon: {
           type: String,
           value: 'icons:check'
         },
 
+        /**
+         * The icon used to unselect items.
+         */
         clearIcon: {
           type: String,
           value: 'icons:clear'
         },
 
+        /**
+         * The list of items to be displayed.
+         */
         items: {
           type: Array
         },
 
+        /**
+         * If true, the list is displayed. Only applies
+         * in case of collapse is true.
+         */
         open: {
           type: Boolean,
           observer: '_openChanged'
         },
 
+        /**
+         * Text displayed when there is no input.
+         */
         placeholder: {
           type: String
         },
 
+        /**
+         * If true, the selected items are hidden.
+         */
         removeSelected: {
           type: Boolean,
           value: false
         },
 
+        /**
+         * The number of rendered items.
+         */
         _renderedCount: {
           type: Number,
           observer: '_renderedCountChanged'
         },
 
+        /**
+         * The value of the input used to search for items.
+         */
         _searchValue: {
           type: String,
           value: ''
         },
 
+        /**
+         * The list of selected items.
+         */
         selectedItems: {
           type: Array,
+          notify: true,
           value: function() {
             return [];
           }
