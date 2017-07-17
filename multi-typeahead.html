@@ -214,7 +214,7 @@ Custom property | Description | Default
       <div class="input">
         <template is="dom-repeat" items="[[selectedItems]]">
           <div class="label">
-            <span style$="background-image: url([[item.picture.thumbnail]])" class="label-image"></span>
+            <span style$="background-image: url([[item.picture]])" class="label-image"></span>
             [[item.name]] <iron-icon class="label-icon" icon="[[clearIcon]]" on-tap="_removeItem"></iron-icon>
           </div>
         </template>
@@ -239,7 +239,7 @@ Custom property | Description | Default
                 on-tap="_handleItemClick"
                 on-mouseover="_onFocusItem"
                 tabindex$="[[index]]">
-                <img src="[[item.picture.thumbnail]]" alt$="[[item.name]]" class="list-item__image">
+                <img src="[[item.picture]]" alt$="[[item.name]]" class="list-item__image">
                 <span class="list-item__text">[[item.name]]</span>
                 <iron-icon icon="[[checkIcon]]"></iron-icon>
               </li>
@@ -537,7 +537,7 @@ Custom property | Description | Default
           this._focusItem(index);
           this._focusInput();
         }
-      },
+      }
 
     });
   </script>

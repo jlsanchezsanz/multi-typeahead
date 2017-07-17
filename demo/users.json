@@ -1,284 +1,84 @@
 {
   "results": [
     {
-      "id": 0,
-      "gender": "male",
       "name": "Kevin Sanders",
-      "email": "kevin.sanders@example.com",
-      "cell": "0723-720-218",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/men/81.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/men/81.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/81.jpg"
-      },
-      "nat": "GB",
-      "role": "UX"
+      "picture": "https://randomuser.me/api/portraits/thumb/men/81.jpg"
     },
     {
-      "id": 1,
-      "gender": "female",
       "name": "Saran Hansen",
-      "email": "sara.hansen@example.com",
-      "cell": "43861358",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/women/45.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/women/45.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/45.jpg"
-      },
-      "nat": "DK",
-      "role": "AG"
+      "picture": "https://randomuser.me/api/portraits/thumb/women/45.jpg"
     },
     {
-      "id": 2,
-      "gender": "female",
       "name": "Donald Trump",
-      "email": "maëlia.roger@example.com",
-      "cell": "06-47-09-90-77",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/women/94.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/women/94.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/94.jpg"
-      },
-      "nat": "FR",
-      "role": "UX"
+      "picture": "https://randomuser.me/api/portraits/thumb/women/94.jpg"
     },
     {
-      "id": 3,
-      "gender": "male",
       "name": "Pablo Iglesias",
-      "email": "storm.nielsen@example.com",
-      "cell": "97479420",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/men/43.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/men/43.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/43.jpg"
-      },
-      "nat": "DK",
-      "role": "FE"
+      "picture": "https://randomuser.me/api/portraits/thumb/men/43.jpg"
     },
     {
-      "id": 4,
-      "gender": "male",
       "name": "micheal hopkins",
-      "email": "micheal.hopkins@example.com",
-      "cell": "0763-879-572",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/men/46.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/men/46.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/46.jpg"
-      },
-      "nat": "GB",
-      "role": "AG"
+      "picture": "https://randomuser.me/api/portraits/thumb/men/46.jpg"
     },
     {
-      "id": 5,
-      "gender": "female",
       "name": "Jennifer Parker",
-      "email": "jennifer.parker@example.com",
-      "cell": "0797-742-088",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/women/37.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/women/37.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/37.jpg"
-      },
-      "nat": "GB",
-      "role": "UX"
+      "picture": "https://randomuser.me/api/portraits/thumb/women/37.jpg"
     },
     {
-      "id": 6,
-      "gender": "female",
       "name": "Sarah Roux",
-      "email": "sarah.roux@example.com",
-      "cell": "06-95-76-10-02",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/women/24.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/women/24.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/24.jpg"
-      },
-      "nat": "FR",
-      "role": "FE"
+      "picture": "https://randomuser.me/api/portraits/thumb/women/24.jpg"
     },
     {
-      "id": 7,
-      "gender": "male",
       "name": "Anton Jensen",
-      "email": "anton.jensen@example.com",
-      "cell": "12014204",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/men/63.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/men/63.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/63.jpg"
-      },
-      "nat": "DK",
-      "role": "AG"
+      "picture": "https://randomuser.me/api/portraits/thumb/men/63.jpg"
     },
     {
-      "id": 8,
-      "gender": "female",
       "name": "Mónica Reyes",
-      "email": "monica.reyes@example.com",
-      "cell": "617-225-905",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/women/59.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/women/59.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/59.jpg"
-      },
-      "nat": "ES",
-      "role": "DO"
+      "picture": "https://randomuser.me/api/portraits/thumb/women/59.jpg"
     },
     {
-      "id": 9,
-      "gender": "male",
       "name": "Adam Madsen",
-      "email": "adam.madsen@example.com",
-      "cell": "88030214",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/men/8.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/men/8.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/8.jpg"
-      },
-      "nat": "DK",
-      "role": "DO"
+      "picture": "https://randomuser.me/api/portraits/thumb/men/8.jpg"
     },
     {
-      "id": 10,
-      "gender": "female",
       "name": "Molly Wheeler",
-      "email": "molly.wheeler@example.com",
-      "cell": "0755-595-650",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/women/83.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/women/83.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/83.jpg"
-      },
-      "nat": "GB",
-      "role": "AG"
+      "picture": "https://randomuser.me/api/portraits/thumb/women/83.jpg"
     },
     {
-      "id": 11,
-      "gender": "male",
       "name": "Felipe Domínguez",
-      "email": "felipe.dominguez@example.com",
-      "cell": "602-492-629",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/men/76.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/men/76.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/76.jpg"
-      },
-      "nat": "ES",
-      "role": "FE"
+      "picture": "https://randomuser.me/api/portraits/thumb/men/76.jpg"
     },
     {
-      "id": 12,
-      "gender": "female",
       "name": "Lucile bertrand",
-      "email": "lucile.bertrand@example.com",
-      "cell": "06-28-66-71-31",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/women/57.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/women/57.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/57.jpg"
-      },
-      "nat": "FR",
-      "role": "DO"
+      "picture": "https://randomuser.me/api/portraits/thumb/women/57.jpg"
     },
     {
-      "id": 13,
-      "gender": "female",
       "name": "Sara Ramírez",
-      "email": "sara.ramirez@example.com",
-      "cell": "608-079-235",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/women/78.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/women/78.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/78.jpg"
-      },
-      "nat": "ES",
-      "role": "FE"
+      "picture": "https://randomuser.me/api/portraits/thumb/women/78.jpg"
     },
     {
-      "id": 14,
-      "gender": "female",
       "name": "antonia aguilar",
-      "email": "antonia.aguilar@example.com",
-      "cell": "686-831-409",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/women/94.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/women/94.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/94.jpg"
-      },
-      "nat": "ES",
-      "role": "UX"
+      "picture": "https://randomuser.me/api/portraits/thumb/women/94.jpg"
     },
     {
-      "id": 15,
-      "gender": "male",
       "name": "silas nielsen",
-      "email": "silas.nielsen@example.com",
-      "cell": "16032392",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/men/11.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/men/11.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/11.jpg"
-      },
-      "nat": "DK",
-      "role": "DO"
+      "picture": "https://randomuser.me/api/portraits/thumb/men/11.jpg"
     },
     {
-      "id": 16,
-      "gender": "female",
       "name": "kiara clement",
-      "email": "kiara.clement@example.com",
-      "cell": "06-29-73-45-26",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/women/39.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/women/39.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/39.jpg"
-      },
-      "nat": "FR",
-      "role": "UX"
+      "picture": "https://randomuser.me/api/portraits/thumb/women/39.jpg"
     },
     {
-      "id": 17,
-      "gender": "male",
       "name": "luca michel",
-      "email": "luca.michel@example.com",
-      "cell": "06-23-68-59-47",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/men/49.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/men/49.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/49.jpg"
-      },
-      "nat": "FR",
-      "role": "DO"
+      "picture": "https://randomuser.me/api/portraits/thumb/men/49.jpg"
     },
     {
-      "id": 18,
-      "gender": "female",
       "name": "jade bertrand",
-      "email": "jade.bertrand@example.com",
-      "cell": "06-69-89-05-17",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/women/46.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/women/46.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/46.jpg"
-      },
-      "nat": "FR",
-      "role": "UX"
+      "picture": "https://randomuser.me/api/portraits/thumb/women/46.jpg"
     },
     {
-      "id": 19,
-      "gender": "female",
       "name": "clémence laurent",
-      "email": "clémence.laurent@example.com",
-      "cell": "06-44-52-56-92",
-      "picture": {
-        "large": "https://randomuser.me/api/portraits/women/60.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/women/60.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/60.jpg"
-      },
-      "nat": "FR",
-      "role": "FE"
+      "picture": "https://randomuser.me/api/portraits/thumb/women/60.jpg"
     }
   ]
 }
