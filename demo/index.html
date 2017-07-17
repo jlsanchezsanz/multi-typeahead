@@ -18,15 +18,38 @@
   </head>
   <body>
     <div class="vertical-section-container centered">
-      <h3>Basic multi-typeahead demo</h3>
+      <h3>Basic demo</h3>
       <demo-snippet>
         <template is="dom-bind">
-        <iron-ajax
-          auto
-          url="./users.json"
-          last-response="{{users}}"></iron-ajax>
+          <iron-ajax
+            auto
+            url="./users.json"
+            last-response="{{users}}"></iron-ajax>
+          <multi-typeahead items="[[users.results]]" placeholder="Find a user" selected-items="{{selected}}"></multi-typeahead>
+        </template>
+      </demo-snippet>
+
+      <h3>Collapsed demo</h3>
+      <demo-snippet>
+        <template is="dom-bind">
+          <iron-ajax
+            auto
+            url="./users.json"
+            last-response="{{users}}"></iron-ajax>
 
           <multi-typeahead items="[[users.results]]" placeholder="Find a user" collapse></multi-typeahead>
+        </template>
+      </demo-snippet>
+
+      <h3>Remove selected demo</h3>
+      <demo-snippet>
+        <template is="dom-bind">
+          <iron-ajax
+            auto
+            url="./users.json"
+            last-response="{{users}}"></iron-ajax>
+
+          <multi-typeahead items="[[users.results]]" placeholder="Find a user" collapse remove-selected></multi-typeahead>
         </template>
       </demo-snippet>
     </div>
