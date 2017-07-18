@@ -17,12 +17,174 @@
         <multi-typeahead></multi-typeahead>
       </template>
     </test-fixture>
+    <test-fixture id="collapse">
+      <template>
+        <multi-typeahead collapse></multi-typeahead>
+      </template>
+    </test-fixture>
 
     <script>
       suite('multi-typeahead', function() {
+        var element;
+        setup(function() {
+          element = fixture('basic');
+          element.items = [{
+            "name": "Kevin Sanders",
+            "picture": "https://randomuser.me/api/portraits/thumb/men/81.jpg"
+          }, {
+            "name": "Saran Hansen",
+            "picture": "https://randomuser.me/api/portraits/thumb/women/45.jpg"
+          }, {
+            "name": "Donald Trump",
+            "picture": "https://randomuser.me/api/portraits/thumb/women/94.jpg"
+          }];
+        });
+
         test('instantiating the element works', function() {
-          var element = fixture('basic');
           assert.equal(element.is, 'multi-typeahead');
+        });
+
+        test('should show an element for each item in the list', function(done) {
+          flush(function() {
+            assert.equal(element.querySelectorAll('.list-item').length, 3);
+            done();
+          });
+        });
+      });
+
+      suite('behavior', function() {
+        var element;
+        setup(function() {
+          element = fixture('basic');
+        });
+
+        test('should show the list when "collapse" is false', function() {
+          assert.equal(element.open, true);
+        });
+
+        test('should hide the list when "collapse" is true', function() {
+          var element = fixture('collapse');
+          assert.equal(element.open, false);
+        });
+
+        test('should show the list when "collapse" is true and element clicked', function(done) {
+          var element = fixture('collapse');
+          element.click();
+          flush(function() {
+            assert.equal(element.open, true);
+            done();
+          });
+        });
+      });
+
+      suite('selection', function() {
+        var element;
+        setup(function() {
+          element = fixture('basic');
+          element.items = [{
+            "name": "Kevin Sanders",
+            "picture": "https://randomuser.me/api/portraits/thumb/men/81.jpg"
+          }, {
+            "name": "Saran Hansen",
+            "picture": "https://randomuser.me/api/portraits/thumb/women/45.jpg"
+          }, {
+            "name": "Donald Trump",
+            "picture": "https://randomuser.me/api/portraits/thumb/women/94.jpg"
+          }];
+        });
+
+        test('should save the selected items in "selectedItems"', function(done) {
+          flush(function() {
+            assert.equal(element.selectedItems.length, 0);
+            element.querySelector('.list-item').click();
+            assert.equal(element.selectedItems.length, 1);
+            done();
+          });
+        });
+
+        test('shouldn\'t save an item that has already been selected', function(done) {
+          flush(function() {
+            element.querySelector('.list-item').click();
+            element.querySelector('.list-item').click();
+            assert.equal(element.selectedItems.length, 1);
+            done();
+          });
+        });
+
+        test('should add a label when an item is selected', function(done) {
+          element.push('selectedItems', element.items[0]);
+          flush(function() {
+            assert.equal(element.querySelectorAll('.label').length, 1);
+            done();
+          });
+        });
+
+        test('should remove an item when the clear icon is clicked', function(done) {
+          element.push('selectedItems', element.items[0]);
+          flush(function() {
+            assert.equal(element.selectedItems.length, 1);
+            element.querySelector('.label-icon').click();
+            assert.equal(element.selectedItems.length, 0);
+            done();
+          });
+        });
+      });
+
+      suite('filter', function() {
+        var element;
+        setup(function() {
+          element = fixture('basic');
+          element.items = [{
+            "name": "Kevin Sanders",
+            "picture": "https://randomuser.me/api/portraits/thumb/men/81.jpg"
+          }, {
+            "name": "Saran Hansen",
+            "picture": "https://randomuser.me/api/portraits/thumb/women/45.jpg"
+          }, {
+            "name": "Donald Trump",
+            "picture": "https://randomuser.me/api/portraits/thumb/women/94.jpg"
+          }];
+        });
+
+        test('should show only the filtered items', function(done) {
+          flush(function() {
+            assert.equal(element.querySelectorAll('.list-item').length, 3);
+            element._searchValue = 'kevin';
+            Polymer.RenderStatus.afterNextRender(element, function() {
+              assert.equal(element.querySelectorAll('.list-item').length, 1);
+              done();
+            });
+          });
+        });
+      });
+
+      suite('placeholder', function() {
+        var element;
+        setup(function() {
+          element = fixture('basic');
+          element.placeholder = 'My placeholder';
+          element.items = [{
+            "name": "Kevin Sanders",
+            "picture": "https://randomuser.me/api/portraits/thumb/men/81.jpg"
+          }, {
+            "name": "Saran Hansen",
+            "picture": "https://randomuser.me/api/portraits/thumb/women/45.jpg"
+          }, {
+            "name": "Donald Trump",
+            "picture": "https://randomuser.me/api/portraits/thumb/women/94.jpg"
+          }];
+        });
+
+        test('should show no placeholder when search', function() {
+          assert.equal(element.$.input.placeholder, 'My placeholder');
+          element._searchValue = 'kevin';
+          assert.equal(element.$.input.placeholder, '');
+        });
+
+        test('should show no placeholder when any item selected', function() {
+          assert.equal(element.$.input.placeholder, 'My placeholder');
+          element.push('selectedItems', element.items[0]);
+          assert.equal(element.$.input.placeholder, '');
         });
       });
     </script>
