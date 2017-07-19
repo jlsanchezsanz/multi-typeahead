@@ -224,9 +224,7 @@ Polymer({
 
   _onTypeaheadClick: function(e) {
     e.stopPropagation();
-    if (this === e.target || this.contains(e.target)) {
-      this.open = true;
-    } else {
+    if (this !== e.target && !this.contains(e.target)) {
       this.open = false;
     }
   },
