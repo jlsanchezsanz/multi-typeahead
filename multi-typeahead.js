@@ -217,8 +217,6 @@ Polymer({
         this.$.input.blur();
         this.open = false;
         break;
-      default:
-        break;
     }
   },
 
