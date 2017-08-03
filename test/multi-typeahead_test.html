@@ -10,6 +10,7 @@
     <script src="../../web-component-tester/browser.js"></script>
 
     <link rel="import" href="../multi-typeahead.html">
+    <link rel="import" href="../../iron-test-helpers/mock-interactions.html">
   </head>
   <body>
     <test-fixture id="basic">
@@ -20,6 +21,11 @@
     <test-fixture id="collapse">
       <template>
         <multi-typeahead collapse></multi-typeahead>
+      </template>
+    </test-fixture>
+    <test-fixture id="removeSelected">
+      <template>
+        <multi-typeahead remove-selected></multi-typeahead>
       </template>
     </test-fixture>
 
@@ -54,8 +60,10 @@
 
       suite('behavior', function() {
         var element;
+        var collapseElement;
         setup(function() {
           element = fixture('basic');
+          collapseElement = fixture('collapse');
         });
 
         test('should show the list when "collapse" is false', function() {
@@ -63,15 +71,15 @@
         });
 
         test('should hide the list when "collapse" is true', function() {
-          var element = fixture('collapse');
-          assert.equal(element.open, false);
+          assert.equal(collapseElement.open, false);
         });
 
-        test('should show the list when "collapse" is true and element clicked', function(done) {
-          var element = fixture('collapse');
-          element.click();
+        test('should hide the list when open, "collapse" is true and click outside', function(done) {
+          collapseElement.click()
+          assert.equal(collapseElement.open, true);
+          collapseElement.parentElement.click()
           flush(function() {
-            assert.equal(element.open, true);
+            assert.equal(collapseElement.open, false);
             done();
           });
         });
@@ -79,9 +87,11 @@
 
       suite('selection', function() {
         var element;
+        var removeSelectedElement;
         setup(function() {
           element = fixture('basic');
-          element.items = [{
+          removeSelectedElement = fixture('removeSelected');
+          var items = [{
             "name": "Kevin Sanders",
             "picture": "https://randomuser.me/api/portraits/thumb/men/81.jpg"
           }, {
@@ -91,6 +101,8 @@
             "name": "Donald Trump",
             "picture": "https://randomuser.me/api/portraits/thumb/women/94.jpg"
           }];
+          element.items = items;
+          removeSelectedElement.items = items;
         });
 
         test('should save the selected items in "selectedItems"', function(done) {
@@ -125,6 +137,29 @@
             assert.equal(element.selectedItems.length, 1);
             element.querySelector('.label-icon').click();
             assert.equal(element.selectedItems.length, 0);
+            done();
+          });
+        });
+
+        test('should hide the selected item when "remove-selected" is true', function(done) {
+          flush(function() {
+            assert.equal(removeSelectedElement.querySelectorAll('.list-item').length, 3);
+            removeSelectedElement.push('selectedItems', removeSelectedElement.items[0]);
+            Polymer.RenderStatus.afterNextRender(removeSelectedElement, function() {
+              assert.equal(removeSelectedElement.querySelectorAll('.list-item').length, 2);
+              done();
+            });
+          });
+        });
+
+        test('should focus on the previous item if there are no available items below', function(done) {
+          flush(function() {
+            var items = element.querySelectorAll('.list-item');
+            MockInteractions.tap(items[items.length - 1]);
+            var focusedItemIndex = Array.from(element.querySelectorAll('.list-item')).findIndex(item => {
+              return Array.from(item.classList).indexOf('hover') > -1
+            });
+            assert.equal(focusedItemIndex, items.length - 2);
             done();
           });
         });
@@ -185,6 +220,124 @@
           assert.equal(element.$.input.placeholder, 'My placeholder');
           element.push('selectedItems', element.items[0]);
           assert.equal(element.$.input.placeholder, '');
+        });
+      });
+
+      suite('navigation using keys', function() {
+        var element;
+        var getFocusedItemIndex;
+        setup(function() {
+          element = fixture('basic');
+          element.placeholder = 'My placeholder';
+          element.items = [{
+            "name": "Kevin Sanders",
+            "picture": "https://randomuser.me/api/portraits/thumb/men/81.jpg"
+          }, {
+            "name": "Saran Hansen",
+            "picture": "https://randomuser.me/api/portraits/thumb/women/45.jpg"
+          }, {
+            "name": "Donald Trump",
+            "picture": "https://randomuser.me/api/portraits/thumb/women/94.jpg"
+          }];
+
+          getFocusedItemIndex = function() {
+            return Array.from(element.querySelectorAll('.list-item')).findIndex(function(item) {
+              return Array.from(item.classList).indexOf('hover') > -1;
+            });
+          }
+        });
+
+        test('should navigate down when down arrow key pressed', function(done) {
+          flush(function() {
+            (element.querySelectorAll('.list-item')[0]).classList.add('hover');
+            assert.equal(getFocusedItemIndex(element), 0);
+            var e = new Event('keydown');
+            e.which = 40;
+            element.dispatchEvent(e);
+            assert.equal(getFocusedItemIndex(element), 1);
+            done();
+          });
+        });
+
+        test('should navigate to the first item when down arrow key pressed', function(done) {
+          flush(function() {
+            var e = new Event('keydown');
+            e.which = 40;
+            element.dispatchEvent(e);
+            assert.equal(getFocusedItemIndex(element), 0);
+            done();
+          });
+        });
+
+        test('should navigate up when up arrow key pressed', function(done) {
+          flush(function() {
+            (element.querySelectorAll('.list-item')[1]).classList.add('hover');
+            assert.equal(getFocusedItemIndex(element), 1);
+            var e = new Event('keydown');
+            e.which = 38;
+            element.dispatchEvent(e);
+            assert.equal(getFocusedItemIndex(element), 0);
+            done();
+          });
+        });
+
+        test('should select an item when focused and enter key pressed', function(done) {
+          flush(function() {
+            (element.querySelectorAll('.list-item')[0]).classList.add('hover');
+            assert.equal(element.selectedItems.length, 0);
+            var e = new Event('keydown');
+            e.which = 13;
+            element.dispatchEvent(e);
+            assert.equal(element.selectedItems[0], element.items[0]);
+            done();
+          });
+        });
+
+        test('should remove the last selected item when backspace pressed', function() {
+          element.push('selectedItems', element.items[0]);
+          var e = new Event('keydown');
+          e.which = 8;
+          element.dispatchEvent(e);
+          assert.equal(element.selectedItems.length, 0);
+        });
+
+        test('should close the list and blur when esc pressed', function() {
+          element.open = true;
+          element.$.input.focus();
+          var e = new Event('keydown');
+          e.which = 27;
+          element.dispatchEvent(e);
+          assert.equal(document.activeElement.tagName, 'BODY');
+          assert.equal(element.open, false);
+        });
+      });
+
+      suite('interaction', function() {
+        var element;
+        setup(function() {
+          element = fixture('basic');
+          element.items = [{
+            "name": "Kevin Sanders",
+            "picture": "https://randomuser.me/api/portraits/thumb/men/81.jpg"
+          }, {
+            "name": "Saran Hansen",
+            "picture": "https://randomuser.me/api/portraits/thumb/women/45.jpg"
+          }, {
+            "name": "Donald Trump",
+            "picture": "https://randomuser.me/api/portraits/thumb/women/94.jpg"
+          }];
+        });
+
+        test('should focus item on mouseover', function(done) {
+          flush(function() {
+            var items = element.querySelectorAll('.list-item');
+            (items[0]).classList.add('hover');
+            var e = new Event('mouseover');
+            items[1].dispatchEvent(e);
+            assert.equal(items[0].classList.contains('hover'), false);
+            assert.equal(items[1].classList.contains('hover'), true);
+            done();
+          });
         });
       });
     </script>

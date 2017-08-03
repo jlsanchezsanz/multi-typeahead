@@ -18,6 +18,15 @@ Typeahead with multiple selection.
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
 
+Install the following packages in order to add coverage to the tests:
+
+```
+npm i -g t2ym/web-component-tester#wct6-plugin
+```
+```
+npm i -g t2ym/web-component-tester-istanbul#0.10.1-wct6.1
+```
+
 ## Viewing Your Element
 
 ```
@@ -27,7 +36,7 @@ $ polymer serve
 ## Running Tests
 
 ```
-$ polymer test
+$ wct
 ```
 
 Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
