@@ -1,5 +1,6 @@
 {
   "name": "multi-typeahead",
+  "version": "1.0.0",  
   "description": "Typeahead with multi selection",
   "main": "multi-typeahead.html",
   "license": "MIT",
